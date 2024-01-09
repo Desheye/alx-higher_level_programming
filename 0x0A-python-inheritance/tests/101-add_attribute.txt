@@ -1,0 +1,2 @@
+John
+[TypeError] can't add new attribute

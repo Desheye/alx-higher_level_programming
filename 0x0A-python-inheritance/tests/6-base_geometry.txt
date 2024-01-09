@@ -1,0 +1,1 @@
+[Exception] area() is not implemented
