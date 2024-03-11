@@ -1,20 +1,10 @@
 #!/usr/bin/node
 
-function second (myArray) {
-  if (myArray.length === 2 || myArray.length === 3) { return (0); }
+const args = process.argv.slice(2).map(Number);
+const sortedArgs = args.sort((a, b) => b - a);
 
-  let max = myArray[2];
-  let secondMax = myArray[3];
-
-  for (let i = 2; i < myArray.length; i++) {
-    if (myArray[i] > max) {
-      secondMax = max;
-      max = myArray[i];
-    } else if (myArray[i] > secondMax && myArray[i] < max) {
-      secondMax = myArray[i];
-    }
-  }
-  return (secondMax);
+if (sortedArgs.length < 2) {
+  console.log(0);
+} else {
+  console.log(sortedArgs[1]);
 }
-
-console.log(second(process.argv));
