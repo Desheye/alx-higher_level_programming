@@ -1,13 +1,10 @@
 #!/usr/bin/python3
 """  lists all states from the database hbtn_0e_0_usa """
 import sys
-
 import MySQLdb
 
-
-def list_states(username, password, database):
-    """List states from the database."""
-    # Connect to MySQL server
+def connect_to_database(username, password, database):
+    """Connect to the MySQL server."""
     try:
         db = MySQLdb.connect(
             host="localhost",
@@ -16,13 +13,18 @@ def list_states(username, password, database):
             passwd=password,
             db=database
         )
-        cursor = db.cursor()
+        return db
     except MySQLdb.Error as error:
         print("Error connecting to MySQL:", error)
+        return None
+
+def list_states(db):
+    """List states from the database."""
+    if db is None:
         return
 
-    # Execute query
     try:
+        cursor = db.cursor()
         cursor.execute("SELECT * FROM states ORDER BY id")
         states = cursor.fetchall()
         print("All states:")
@@ -32,9 +34,9 @@ def list_states(username, password, database):
         print("Error executing MySQL query:", error)
     finally:
         # Close cursor and database connection
-        cursor.close()
+        if 'cursor' in locals():
+            cursor.close()
         db.close()
-
 
 if __name__ == "__main__":
     # Check if correct number of arguments is provided
@@ -45,6 +47,9 @@ if __name__ == "__main__":
         username = sys.argv[1]
         password = sys.argv[2]
         database = sys.argv[3]
+        # Connect to the database
+        db = connect_to_database(username, password, database)
         # Call function to list states
-        list_states(username, password, database)
+        list_states(db)
+
 
