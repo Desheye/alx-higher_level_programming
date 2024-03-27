@@ -2,7 +2,6 @@
 """ This script finds a peak within a list of unsorted integers.
 """
 
-
 def find_peak(list_of_integers):
     """
     Args:
@@ -30,4 +29,3 @@ def find_peak(list_of_integers):
             mid = mid - mid_e // 2
         else:
             return list_of_integers[mid]
-
