@@ -1,34 +1,33 @@
 #!/usr/bin/python3
+""" This script finds a peak within a list of unsorted integers.
+"""
+
 
 def find_peak(list_of_integers):
     """
-    Find a peak in a list of unsorted integers.
-
     Args:
-        list_of_integers (list): List of unsorted integers.
-
+        list_of_integers (list): List of integers to identify a peak from.
     Returns:
-        int: A peak value from the list.
+        int or None: Returns the peak of the list_of_integers, or None if list is empty.
     """
-    if not list_of_integers:
+    size = len(list_of_integers)
+    mid_e = size
+    mid = size // 2
+
+    if size == 0:
         return None
 
-    left, right = 0, len(list_of_integers) - 1
-
-    while left < right:
-        mid = (left + right) // 2
-
-        if list_of_integers[mid] < list_of_integers[mid + 1]:
-            # Move right if the peak is on the right side
-            left = mid + 1
+    while True:
+        mid_e = mid_e // 2
+        if (mid < size - 1 and
+                list_of_integers[mid] < list_of_integers[mid + 1]):
+            if mid_e // 2 == 0:
+                mid_e = 2
+            mid = mid + mid_e // 2
+        elif mid_e > 0 and list_of_integers[mid] < list_of_integers[mid - 1]:
+            if mid_e // 2 == 0:
+                mid_e = 2
+            mid = mid - mid_e // 2
         else:
-            # Move left if the peak is on the left side or at mid
-            right = mid
+            return list_of_integers[mid]
 
-    # At the end of the loop, left and right will converge to a peak
-    return list_of_integers[left]
-
-# Example usage:
-# list_of_integers = [1, 3, 20, 4, 1, 0]
-# peak_value = find_peak(list_of_integers)
-# print("Peak value:", peak_value)
